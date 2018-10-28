@@ -1,6 +1,19 @@
 const express = require("express");
 const mongoose = require("mongoose");
+const bodyParser = require("body-parser");
 require("dotenv").config();
+
+//load routes
+const makers = require("./routes/makers");
+
+const app = express();
+
+//body parser middleware
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+
+//map global promises
+mongoose.Promise = global.Promise;
 
 //mongoose connect
 mongoose
@@ -11,7 +24,8 @@ mongoose
   .then(() => console.log("MongoDB Connected"))
   .catch(err => console.log(err));
 
-const app = express();
+//use routes
+app.use("/api/makers", makers);
 
 const port = process.env.PORT || 7000;
 

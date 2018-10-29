@@ -20,14 +20,11 @@ const MakerSchema = new Schema({
   },
   projects: [
     {
-      projectName: {
+      name: {
         type: String,
         required: true
       },
-      projectUrl: {
-        type: String
-      },
-      projectCategory: {
+      url: {
         type: String
       }
     }

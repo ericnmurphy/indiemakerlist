@@ -5,6 +5,7 @@ const Maker = require("../models/Maker");
 
 //load validation
 const validateMakerInput = require("../validation/maker");
+const validateProjectInput = require("../validation/project");
 
 router.get("/all", (req, res) => {
   const errors = {};
@@ -50,6 +51,31 @@ router.post("/", (req, res) => {
 
     //save maker
     new Maker(makerFields).save().then(maker => res.json(maker));
+  });
+});
+
+//add maker project
+//TODO: Add logged in validation
+
+router.post("/project", (req, res) => {
+  const { errors, isValid } = validateProjectInput(req.body);
+
+  //check validation
+  if (!isValid) {
+    //return any errors with 400 status
+    return res.status(400).json(errors);
+  }
+
+  Maker.findOne({ user: req.body.id }).then(maker => {
+    const newProject = {};
+
+    if (req.body.name) newProject.name = req.body.name;
+    if (req.body.url) newProject.url = req.body.url;
+
+    //add to exp array
+    maker.projects.push(newProject);
+
+    maker.save().then(maker => res.json(maker));
   });
 });
 

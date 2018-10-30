@@ -1,6 +1,8 @@
 const express = require("express");
 const router = express.Router();
 const mongoose = require("mongoose");
+const Twitter = require("twitter");
+require("dotenv").config();
 const Maker = require("../models/Maker");
 
 //load validation
@@ -25,6 +27,7 @@ router.get("/all", (req, res) => {
 
 //create maker profile
 //TODO: Add logged in validation
+//TODO: Add some error catching
 
 router.post("/", (req, res) => {
   const { errors, isValid } = validateMakerInput(req.body);
@@ -35,22 +38,41 @@ router.post("/", (req, res) => {
     return res.status(400).json(errors);
   }
 
-  //get fields
-  const makerFields = {};
-  if (req.body.name) makerFields.name = req.body.name;
-  if (req.body.url) makerFields.url = req.body.url;
-  if (req.body.twitter) makerFields.twitter = req.body.twitter;
-  if (req.body.image) makerFields.image = req.body.image;
+  //twitter config
+  const client = new Twitter({
+    consumer_key: process.env.TWITTER_CONSUMER_KEY,
+    consumer_secret: process.env.TWITTER_CONSUMER_SECRET,
+    access_token_key: process.env.TWITTER_ACCESS_TOKEN_KEY,
+    access_token_secret: process.env.TWITTER_ACCESS_TOKEN_SECRET
+  });
 
-  //check if handle exists
-  Maker.findOne({ twitter: makerFields.twitter }).then(maker => {
-    if (maker) {
-      errors.handle = "That handle already exists";
-      res.status(400).json(errors);
+  //pull info from twitter
+  const handle = req.body.twitter;
+  const params = { screen_name: handle };
+  client.get("users/show", params, (error, res) => {
+    if (!error) {
+      //save variables
+      const fields = {};
+      fields.name = req.body.name;
+      fields.twitter = handle;
+      fields.image = res.profile_image_url_https;
+      fields.followers = res.followers_count;
+      if (req.body.url) fields.url = req.body.url;
+
+      //save to database
+      //check if handle exists
+      Maker.findOne({ twitter: handle }).then(maker => {
+        if (maker) {
+          errors.handle = "That handle already exists";
+          res.status(400).json(errors);
+        }
+
+        //save maker
+        new Maker(fields).save().then(maker => res.json(maker));
+      });
+    } else {
+      console.log(error);
     }
-
-    //save maker
-    new Maker(makerFields).save().then(maker => res.json(maker));
   });
 });
 

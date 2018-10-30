@@ -14,6 +14,10 @@ const MakerSchema = new Schema({
     type: String,
     required: true
   },
+  followers: {
+    type: Number,
+    required: true
+  },
   image: {
     type: String,
     required: true

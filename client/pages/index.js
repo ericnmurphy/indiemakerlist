@@ -1,31 +1,25 @@
-import Link from "next/link";
-import fetch from "isomorphic-unfetch";
+import Link from 'next/link'
+import fetch from 'isomorphic-unfetch'
+import Maker from '../components/Maker'
 
 const Index = props => (
   <div>
     Hello, world.
-    <ul>
-      {props.makers.map(maker => (
-        <li>
-          <h3>
-            {maker.name}{" "}
-            <Link href={{ pathname: `https://twitter.com/${maker.twitter}` }}>
-              <a target="_blank">@{maker.twitter}</a>
-            </Link>
-          </h3>
-        </li>
+    <div>
+      {props.makers.map((maker, i) => (
+        <Maker data={maker} key={i} />
       ))}
-    </ul>
+    </div>
   </div>
-);
+)
 
 Index.getInitialProps = async () => {
-  const res = await fetch(`${process.env.BACKEND_URL}/api/makers/all`);
-  const data = await res.json();
+  const res = await fetch(`${process.env.BACKEND_URL}/api/makers/all`)
+  const data = await res.json()
 
   return {
-    makers: data
-  };
-};
+    makers: data,
+  }
+}
 
-export default Index;
+export default Index

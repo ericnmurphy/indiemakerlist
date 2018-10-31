@@ -1,15 +1,15 @@
-import Link from 'next/link'
 import fetch from 'isomorphic-unfetch'
+import Hero from '../components/Hero'
 import Maker from '../components/Maker'
 
 const Index = props => (
   <div>
-    Hello, world.
-    <div>
+    <Hero />
+    <section>
       {props.makers.map((maker, i) => (
         <Maker data={maker} key={i} />
       ))}
-    </div>
+    </section>
   </div>
 )
 

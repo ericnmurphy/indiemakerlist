@@ -1,10 +1,15 @@
+import Project from './Project'
+
 export default props => {
   const { key } = props
-  const { name, twitter, projects } = props.data
+  const { name, image, url, twitter, projects } = props.data
   return (
     <div key={key}>
+      <img src={image} alt={name} />
       <h3>
-        {name}{' '}
+        <a target="_blank" href={url}>
+          {name}
+        </a>{' '}
         <span>
           <a target="_blank" href={`https://twitter.com/${twitter}`}>
             @{twitter}
@@ -13,11 +18,7 @@ export default props => {
       </h3>
       <ul>
         {projects.map(project => (
-          <li>
-            <a target="_blank" href={project.url}>
-              {project.name}
-            </a>
-          </li>
+          <Project project={project} />
         ))}
       </ul>
     </div>

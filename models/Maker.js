@@ -1,42 +1,46 @@
-const mongoose = require("mongoose");
-const Schema = mongoose.Schema;
+const mongoose = require('mongoose')
+const Schema = mongoose.Schema
 
 //create schema
 const MakerSchema = new Schema({
   name: {
     type: String,
-    required: true
+    required: true,
   },
   url: {
-    type: String
+    type: String,
   },
   twitter: {
     type: String,
-    required: true
+    required: true,
   },
   followers: {
     type: Number,
-    required: true
+    required: true,
   },
   image: {
     type: String,
-    required: true
+    required: true,
+  },
+  largeImage: {
+    type: String,
+    required: true,
   },
   projects: [
     {
       name: {
         type: String,
-        required: true
+        required: true,
       },
       url: {
-        type: String
-      }
-    }
+        type: String,
+      },
+    },
   ],
   date: {
     type: Date,
-    default: Date.now
-  }
-});
+    default: Date.now,
+  },
+})
 
-module.exports = Maker = mongoose.model("makers", MakerSchema, "makers");
+module.exports = Maker = mongoose.model('makers', MakerSchema, 'makers')

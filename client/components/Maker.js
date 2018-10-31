@@ -2,7 +2,7 @@ import Project from './Project'
 
 export default props => {
   const { key } = props
-  const { name, image, url, twitter, projects } = props.data
+  const { name, image, url, twitter, followers, projects } = props.data
   return (
     <div key={key}>
       <img src={image} alt={name} />
@@ -16,6 +16,7 @@ export default props => {
           </a>
         </span>
       </h3>
+      <p>{followers}</p>
       <ul>
         {projects.map(project => (
           <Project project={project} />

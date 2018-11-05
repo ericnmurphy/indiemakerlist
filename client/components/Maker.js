@@ -3,18 +3,12 @@ import Project from './Project'
 
 const MakerWrapper = styled.div`
   display: flex;
-`
 
-const MakerImage = styled.div`
-  width: 10%;
-`
-
-const MakerName = styled.div`
-  width: 35%;
-`
-
-const ProjectsWrapper = styled.div`
-  width: 55%;
+  div {
+    display: flex;
+    align-items: center;
+    margin-right: 1rem;
+  }
 `
 
 const ProjectsList = styled.ul`
@@ -26,10 +20,11 @@ export default props => {
   const { name, image, url, twitter, followers, projects } = props.data
   return (
     <MakerWrapper key={keyNumber}>
-      <MakerImage>
+      <div className="maker-vote">👍 200</div>
+      <div className="maker-image">
         <img src={image} alt={name} />
-      </MakerImage>
-      <MakerName>
+      </div>
+      <div className="maker-name">
         <h3>
           <a target="_blank" href={url}>
             {name}
@@ -40,17 +35,17 @@ export default props => {
             </a>
           </span>
         </h3>
-      </MakerName>
-      <div>
+      </div>
+      <div className="maker-followers">
         <p>{followers}</p>
       </div>
-      <ProjectsWrapper>
+      <div className="maker-projects">
         <ProjectsList>
-          {projects.map(project => (
-            <Project project={project} />
+          {projects.map((project, i) => (
+            <Project project={project} keyNumber={i} />
           ))}
         </ProjectsList>
-      </ProjectsWrapper>
+      </div>
     </MakerWrapper>
   )
 }

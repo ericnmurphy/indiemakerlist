@@ -108,7 +108,7 @@ router.post('/project', (req, res) => {
     return res.status(400).json(errors)
   }
 
-  Maker.findOne({ user: req.body.id }).then(maker => {
+  Maker.findOne({ _id: req.body.id }).then(maker => {
     const newProject = {}
 
     if (req.body.name) newProject.name = req.body.name

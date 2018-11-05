@@ -1,6 +1,7 @@
 const express = require('express')
 const mongoose = require('mongoose')
 const bodyParser = require('body-parser')
+const cookieParser = require('cookie-parser')
 
 require('dotenv').config()
 
@@ -8,6 +9,7 @@ require('dotenv').config()
 const makers = require('./routes/makers')
 
 const app = express()
+app.use(cookieParser())
 
 //body parser middleware
 app.use(bodyParser.urlencoded({ extended: false }))
@@ -24,6 +26,24 @@ mongoose
   )
   .then(() => console.log('MongoDB Connected'))
   .catch(err => console.log(err))
+
+//set cookie on default route
+app.get('/', (req, res) => {
+  // read cookies
+  console.log(req.cookies)
+
+  if (!req.cookies) {
+    let options = {
+      maxAge: 1000 * 60 * 15, // would expire after 15 minutes
+      httpOnly: true, // The cookie only accessible by the web server
+    }
+
+    // Set cookie
+    const randomNumber = Math.floor(Math.random() * 9999999999)
+    res.cookie('cookieName', randomNumber, options) // options is optional
+  }
+  res.send('bitch')
+})
 
 //use routes
 app.use('/api/makers', makers)

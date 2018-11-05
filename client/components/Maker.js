@@ -20,7 +20,10 @@ export default props => {
   const { name, image, url, twitter, followers, projects } = props.data
   return (
     <MakerWrapper key={keyNumber}>
-      <div className="maker-vote">👍 200</div>
+      <div className="maker-vote">
+        <a>👍</a>
+        200
+      </div>
       <div className="maker-image">
         <img src={image} alt={name} />
       </div>

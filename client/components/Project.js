@@ -1,10 +1,17 @@
+import styled from 'styled-components'
+
+const ProjectWrapper = styled.li`
+  display: inline-block;
+  list-style: none;
+`
+
 export default props => {
   const { name, url } = props.project
   return (
-    <li>
+    <ProjectWrapper>
       <a target="_blank" href={url}>
         {name}
       </a>
-    </li>
+    </ProjectWrapper>
   )
 }

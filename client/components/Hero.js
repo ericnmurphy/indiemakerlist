@@ -2,7 +2,7 @@ export default () => (
   <section>
     <h1>Find your people.</h1>
     <p>
-      Follow inspiring indie makers. Find the people that inspire you and what
+      Join a global community of makers. Find inspiring indie makers and what
       they're currently working on.
     </p>
   </section>

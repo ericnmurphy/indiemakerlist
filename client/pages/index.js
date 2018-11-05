@@ -7,7 +7,7 @@ const Index = props => (
     <Hero />
     <section>
       {props.makers.map((maker, i) => (
-        <Maker data={maker} key={i} />
+        <Maker data={maker} keyNumber={i} />
       ))}
     </section>
   </div>

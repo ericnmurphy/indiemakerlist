@@ -121,4 +121,23 @@ router.post('/project', (req, res) => {
   })
 })
 
+//like maker
+router.post('/like/:id', (req, res) => {
+  Maker.findById(req.params.id).then(maker => {
+    if (
+      maker.votes.filter(vote => vote.user.toString() === req.body.user)
+        .length > 0
+    ) {
+      return res
+        .status(400)
+        .json({ alreadyliked: 'User already liked this post' })
+    }
+
+    //add user id to likes array
+    maker.votes.unshift({ user: req.body.user })
+
+    maker.save().then(maker => res.json(maker))
+  })
+})
+
 module.exports = router

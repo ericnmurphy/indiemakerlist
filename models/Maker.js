@@ -37,6 +37,18 @@ const MakerSchema = new Schema({
       },
     },
   ],
+  votes: [
+    {
+      user: {
+        type: String,
+        required: true,
+      },
+      date: {
+        type: Date,
+        default: Date.now,
+      },
+    },
+  ],
   date: {
     type: Date,
     default: Date.now,

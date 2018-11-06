@@ -17,12 +17,12 @@ const ProjectsList = styled.ul`
 
 export default props => {
   const { keyNumber } = props
-  const { name, image, url, twitter, followers, projects } = props.data
+  const { name, image, url, twitter, followers, projects, votes } = props.data
   return (
     <MakerWrapper key={keyNumber}>
       <div className="maker-vote">
         <a>👍</a>
-        200
+        {votes.length}
       </div>
       <div className="maker-image">
         <img src={image} alt={name} />

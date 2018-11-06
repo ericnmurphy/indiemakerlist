@@ -1,5 +1,7 @@
+import React from 'react'
 import fetch from 'isomorphic-unfetch'
 import styled from 'styled-components'
+import Cookies from 'js-cookie'
 import Hero from '../components/Hero'
 import Maker from '../components/Maker'
 import Table from '../components/Table'
@@ -11,24 +13,34 @@ const Wrapper = styled.div`
   padding: 1rem 1.5rem;
 `
 
-const Index = props => (
-  <Wrapper>
-    <Hero />
-    <Table>
-      <TableHead />
-      {props.makers.map((maker, i) => (
-        <Maker data={maker} keyNumber={i} />
-      ))}
-    </Table>
-  </Wrapper>
-)
+class Index extends React.Component {
+  static getInitialProps = async () => {
+    const res = await fetch(`${process.env.BACKEND_URL}/api/makers/all`)
+    const data = await res.json()
 
-Index.getInitialProps = async () => {
-  const res = await fetch(`${process.env.BACKEND_URL}/api/makers/all`)
-  const data = await res.json()
+    return {
+      makers: data,
+    }
+  }
 
-  return {
-    makers: data,
+  componentDidMount = () => {
+    if (!Cookies.get('user')) {
+      Cookies.set('user', Date.now(), { expires: 365 })
+    }
+  }
+
+  render() {
+    return (
+      <Wrapper>
+        <Hero />
+        <Table>
+          <TableHead />
+          {this.props.makers.map((maker, i) => (
+            <Maker data={maker} key={i} />
+          ))}
+        </Table>
+      </Wrapper>
+    )
   }
 }
 

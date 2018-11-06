@@ -16,10 +16,9 @@ const ProjectsList = styled.ul`
 `
 
 export default props => {
-  const { keyNumber } = props
   const { name, image, url, twitter, followers, projects, votes } = props.data
   return (
-    <MakerWrapper key={keyNumber}>
+    <MakerWrapper>
       <div className="maker-vote">
         <a>👍</a>
         {votes.length}
@@ -45,7 +44,7 @@ export default props => {
       <div className="maker-projects">
         <ProjectsList>
           {projects.map((project, i) => (
-            <Project project={project} keyNumber={i} />
+            <Project project={project} key={i} />
           ))}
         </ProjectsList>
       </div>

@@ -14,10 +14,9 @@ const ProjectWrapper = styled.li`
 `
 
 export default props => {
-  const { keyNumber } = props
   const { name, url } = props.project
   return (
-    <ProjectWrapper key={keyNumber}>
+    <ProjectWrapper>
       <a target="_blank" href={url}>
         {name}
       </a>

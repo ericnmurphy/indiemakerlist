@@ -28,21 +28,21 @@ mongoose
   .catch(err => console.log(err))
 
 //set cookie on default route
-app.get('/', (req, res) => {
+app.get('/api/cookie', (req, res) => {
   // read cookies
-  console.log(req.cookies)
+  // console.log(req.cookies.user)
 
-  if (!req.cookies) {
-    let options = {
-      maxAge: 1000 * 60 * 15, // would expire after 15 minutes
-      httpOnly: true, // The cookie only accessible by the web server
-    }
-
-    // Set cookie
-    const randomNumber = Math.floor(Math.random() * 9999999999)
-    res.cookie('cookieName', randomNumber, options) // options is optional
+  // if (!req.cookies.user) {
+  // Set cookie
+  let options = {
+    maxAge: 1000 * 60 * 15, // would expire after 15 minutes
+    httpOnly: false,
   }
-  res.send('bitch')
+  const randomNumber = Math.floor(Math.random() * 9999999999)
+  res.cookie('user', randomNumber, options) // options is optional
+  //   console.log('fuck')
+  // }
+  res.status(200).send('set cookie')
 })
 
 //use routes

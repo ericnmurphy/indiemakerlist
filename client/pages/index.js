@@ -14,6 +14,8 @@ const Wrapper = styled.div`
 `
 
 class Index extends React.Component {
+  state = { user: '' }
+
   static getInitialProps = async () => {
     const res = await fetch(`${process.env.BACKEND_URL}/api/makers/all`)
     const data = await res.json()
@@ -36,7 +38,7 @@ class Index extends React.Component {
         <Table>
           <TableHead />
           {this.props.makers.map((maker, i) => (
-            <Maker data={maker} key={i} />
+            <Maker data={maker} user={this.props.user} key={i} />
           ))}
         </Table>
       </Wrapper>

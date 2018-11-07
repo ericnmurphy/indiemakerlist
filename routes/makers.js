@@ -123,7 +123,11 @@ router.post('/project', (req, res) => {
 
 //like maker
 router.post('/like/:id', (req, res) => {
+  console.log('hi')
+  console.log('-----------------')
+  console.log(req.body.user)
   Maker.findById(req.params.id).then(maker => {
+    console.log('inside')
     if (
       maker.votes.filter(vote => vote.user.toString() === req.body.user)
         .length > 0
